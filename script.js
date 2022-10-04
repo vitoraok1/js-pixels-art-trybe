@@ -3,6 +3,7 @@
 window.onload = function firstColor() {
     let firstColor = document.getElementById('color-black');
     firstColor.style.backgroundColor = 'black';
+    firstColor.classList.add('selected');
 }
 
 //  Criando a paleta de cores das outras cores
@@ -37,5 +38,37 @@ function randomButton() {
         let changeColors = allPaletteColors[colorIndex]; 
         changeColors.style.backgroundColor = rgbGenerator();
     }
+    let saveColorPalette = document.querySelector('#color-palette').innerHTML;
+    localStorage.setItem('colorPalette', JSON.stringify(saveColorPalette));
 }
 getRandomButton.addEventListener('click', randomButton);
+
+// Implementação da função para armazenar a paleta de cores gerada no localStorage
+
+function setColors() {
+    let saveColorPalette = document.querySelector('#color-palette').innerHTML;
+    let colorsPalette = JSON.parse(localStorage.getItem('colorPalette'));
+    saveColorPalette = colorsPalette;
+}
+setColors();
+
+// Adicionando a página um grid de pixels 5x5
+
+function boardCreate(numberOfPixels) {
+    const board = document.getElementById('pixel-board');
+    for (let index = 0; index < numberOfPixels; index += 1) {
+      const pixelSection = document.createElement('section');
+      pixelSection.className = 'pixel-rows';
+      board.appendChild(pixelSection);
+      const arrPixel = document.getElementsByClassName('pixel-rows');
+  
+      for (let index2 = 0; index2 < numberOfPixels; index2 += 1) {
+        const pixel = document.createElement('div');
+        pixel.className = 'pixel';
+        pixel.style.backgroundColor = 'white';
+        arrPixel[index].appendChild(pixel);
+      }
+    }
+}
+boardCreate(5);
+
