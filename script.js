@@ -28,6 +28,14 @@ generateColor(rgbGenerator());
 generateColor(rgbGenerator());
 generateColor(rgbGenerator());
 
+// Implementação do botão para gerar cores aleatórias
 
-
-
+let getRandomButton = document.getElementById('button-random-color');
+function randomButton() {
+    let allPaletteColors = document.querySelectorAll('.color');
+    for (colorIndex = 1; colorIndex <= allPaletteColors.length - 1; colorIndex += 1) {
+        let changeColors = allPaletteColors[colorIndex]; 
+        changeColors.style.backgroundColor = rgbGenerator();
+    }
+}
+getRandomButton.addEventListener('click', randomButton);
