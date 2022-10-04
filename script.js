@@ -88,3 +88,23 @@ function pickColor() {
 } 
 pickColor();  
 // classList.remove source: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+
+// Pintar pixel com a cor escolhida
+
+let pixelSelector = document.querySelector('#pixel-board');
+
+pixelSelector.addEventListener('click', function(event) {
+    let pickedColor = document.querySelector('.selected');
+    let color = getComputedStyle(pickedColor).backgroundColor;
+    let paintedPixel = event.target;
+    paintedPixel.style.backgroundColor = color;
+})
+// getComputedStyle source: https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
+
+// Criar botão para resetar o grid
+
+let buttonResetGrid = document.getElementById('clear-board');
+  buttonResetGrid.addEventListener('click', function (){
+    document.location.reload();
+})
+
