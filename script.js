@@ -72,3 +72,19 @@ function boardCreate(numberOfPixels) {
 }
 boardCreate(5);
 
+// Selecionar cores da paleta
+
+let colors = document.querySelectorAll('.color');
+
+function pickColor() {
+    for (let colorPosition = 0; colorPosition < colors.length; colorPosition += 1) {
+        colors[colorPosition].addEventListener('click', function(event) {
+            for (let secondColorPosition = 0; secondColorPosition < colors.length; secondColorPosition += 1) {
+                colors[secondColorPosition].classList.remove('selected');
+            }
+            event.target.classList.add('selected')
+        })
+    }
+} 
+pickColor();  
+// classList.remove source: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
