@@ -17,17 +17,23 @@ function rgbGenerator() {
 }
 //Utilização da propriedade Math.floor com o Math.random para gerar um rgb aleatório source: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
 
-function generateColor(color) {
-    let paletteColors = document.getElementById('color-palette');
-    let palette = document.createElement('div');
-    palette.style.backgroundColor = color;
-    palette.setAttribute('class', 'color');
-    paletteColors.appendChild(palette);
-}
+// Função para retornar as cores
+const actualColors = [];
+actualColors[0] = 'black';
+// console.log(actualColors);
 
-generateColor(rgbGenerator());
-generateColor(rgbGenerator());
-generateColor(rgbGenerator());
+function generateColor() {
+    let paletteColors = document.getElementById('color-palette');
+    let palette;
+    for (let index = 1; index < 4; index += 1 ) {
+        palette = document.createElement('div');
+        palette.style.backgroundColor = rgbGenerator();
+        palette.setAttribute('class', 'color');
+        paletteColors.appendChild(palette);
+        actualColors.push(paletteColors.childNodes[index].style.backgroundColor);
+    }
+}
+generateColor();
 
 // Implementação do botão para gerar cores aleatórias
 
@@ -38,19 +44,27 @@ function randomButton() {
         let changeColors = allPaletteColors[colorIndex]; 
         changeColors.style.backgroundColor = rgbGenerator();
     }
-    let saveColorPalette = document.querySelector('#color-palette').innerHTML;
-    localStorage.setItem('colorPalette', JSON.stringify(saveColorPalette));
+    localStorage.setItem('colorPalette', JSON.stringify(actualColors));
 }
 getRandomButton.addEventListener('click', randomButton);
 
-// Implementação da função para armazenar a paleta de cores gerada no localStorage
+// Implementação da função para resgatar a paleta de cores gerada no localStorage
 
-function setColors() {
-    let saveColorPalette = document.querySelector('#color-palette').innerHTML;
-    let colorsPalette = JSON.parse(localStorage.getItem('colorPalette'));
-    saveColorPalette = colorsPalette;
-}
-setColors();
+// function getColors() {
+//     if (localStorage.getItem('colorPalette') === null) {
+//         generateColor();
+//     } 
+//     // if (currentColors = JSON.parse(localStorage.getItem('colorPalette'))) 
+//     //     currentColors = JSON.parse(localStorage.getItem('colorPalette'));
+
+//     for (let index = 1; index <= 3; index += 1) {
+//         let rgbValue = actualColors[index];
+//         console.log(rgbValue);
+//     }  
+// }
+// getColors();
+
+// console.log(JSON.parse(localStorage.getItem('colorPalette')));
 
 // Adicionando a página um grid de pixels 5x5
 
@@ -58,16 +72,17 @@ function boardCreate(numberOfPixels) {
     const board = document.getElementById('pixel-board');
     for (let index = 0; index < numberOfPixels; index += 1) {
       const pixelSection = document.createElement('section');
-      pixelSection.className = 'pixel-rows';
-      board.appendChild(pixelSection);
-      const arrPixel = document.getElementsByClassName('pixel-rows');
+      pixelSection.className = 'pixel-lines';
   
       for (let index2 = 0; index2 < numberOfPixels; index2 += 1) {
         const pixel = document.createElement('div');
         pixel.className = 'pixel';
         pixel.style.backgroundColor = 'white';
-        arrPixel[index].appendChild(pixel);
+
+        pixelSection.appendChild(pixel);
       }
+        board.appendChild(pixelSection);
+
     }
 }
 boardCreate(5);
@@ -103,8 +118,16 @@ pixelSelector.addEventListener('click', function(event) {
 
 // Criar botão para resetar o grid
 
-let buttonResetGrid = document.getElementById('clear-board');
-  buttonResetGrid.addEventListener('click', function (){
-    document.location.reload();
-})
+function resetGrid() {
+    let buttonResetGrid = document.getElementById('clear-board');
+    let allPixels = document.querySelectorAll('.pixel');
+
+    buttonResetGrid.addEventListener('click', function (){
+        for(index = 0; index < allPixels.length; index += 1) {
+            let changeColors = allPixels[index]; 
+            changeColors.style.backgroundColor = 'white';
+        }
+  })
+}
+resetGrid();
 

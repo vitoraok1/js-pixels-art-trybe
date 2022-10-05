@@ -81,10 +81,9 @@ h1 {
 }
 
 #pixel-board {
-    border: 1px solid black;
     display: flex;
-    width: 210px;
-    margin: auto;
+    flex-direction: column;
+    margin-top: 10px;
 }
 
 .pixel {
@@ -92,5 +91,10 @@ h1 {
     width: 40px;
     height: 40px;
     background-color: white;
+    display: inline-block;
 }
-  
+
+.pixel-lines {
+    height: 40px;
+    margin: auto;
+}
