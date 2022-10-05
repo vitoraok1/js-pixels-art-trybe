@@ -4,8 +4,19 @@ window.onload = function firstColor() {
     let firstColor = document.getElementById('color-black');
     firstColor.style.backgroundColor = 'black';
     firstColor.classList.add('selected');
-}
 
+    if (localStorage.getItem('colorPalette') === null) {
+        generateColor();
+        savePaletteColors();
+
+    } else {
+        getColors();
+        // let saveColors = JSON.parse(localStorage.getItem('colorPalette'));
+    }
+}
+const actualColors = [];
+actualColors[0] = 'black';
+// localStorage.clear()
 //  Criando a paleta de cores das outras cores
 
 function rgbGenerator() {
@@ -18,9 +29,7 @@ function rgbGenerator() {
 //Utilização da propriedade Math.floor com o Math.random para gerar um rgb aleatório source: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
 
 // Função para retornar as cores
-const actualColors = [];
-actualColors[0] = 'black';
-// console.log(actualColors);
+
 
 function generateColor() {
     let paletteColors = document.getElementById('color-palette');
@@ -33,7 +42,7 @@ function generateColor() {
         actualColors.push(paletteColors.childNodes[index].style.backgroundColor);
     }
 }
-generateColor();
+// generateColor();
 
 // Implementação do botão para gerar cores aleatórias
 
@@ -50,19 +59,29 @@ getRandomButton.addEventListener('click', randomButton);
 
 // Implementação da função para resgatar a paleta de cores gerada no localStorage
 
-// function getColors() {
-//     if (localStorage.getItem('colorPalette') === null) {
-//         generateColor();
-//     } 
-//     // if (currentColors = JSON.parse(localStorage.getItem('colorPalette'))) 
-//     //     currentColors = JSON.parse(localStorage.getItem('colorPalette'));
+function getColors() {
+    if (localStorage.getItem('colorPalette') === null) {
+        generateColor();
+    } 
+    // if (currentColors = JSON.parse(localStorage.getItem('colorPalette'))) 
+    //     currentColors = JSON.parse(localStorage.getItem('colorPalette'));
 
-//     for (let index = 1; index <= 3; index += 1) {
-//         let rgbValue = actualColors[index];
-//         console.log(rgbValue);
-//     }  
-// }
+    for (let index = 1; index <= 3; index += 1) {
+        let rgbValue = actualColors[index];
+        console.log(rgbValue);
+    }  
+}
 // getColors();
+
+function savePaletteColors() {
+    let paletteElements = document.getElementsByClassName('color');
+    let colorsArray = [];
+    for(let index = 0; index < paletteElements.length; index += 1) {
+        let number = paletteElements[index].style.backgroundColor;
+        colorsArray.push(number);
+    }
+    localStorage.setItem('colorPalette', JSON.stringify(colorsArray));
+}
 
 // console.log(JSON.parse(localStorage.getItem('colorPalette')));
 
