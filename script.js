@@ -1,6 +1,9 @@
-// Adicionar a cor preta como primeira cor da paleta de cores
+// Constante de array para armazenar as cores atuais
+
 const actualColors = [];
 actualColors[0] = 'black';
+
+// Determinando a cor black como a primeira cor da paleta e a que inicia selecionada
 
 window.onload = function() {
     let firstColor = document.getElementById('color-black');
@@ -16,8 +19,11 @@ window.onload = function() {
         getColors();
         pickColor();
     }
+
+    if (localStorage.getItem('pixelBoard') !== null) {
+        recoverPaintedColors();
+    }
 }
-// localStorage.clear()
 
 //  Criando a paleta de cores das outras cores
 
@@ -43,7 +49,6 @@ function generateColor() {
         actualColors.push(paletteColors.childNodes[index].style.backgroundColor);
     }
 }
-// generateColor();
 
 // Implementação do botão para gerar cores aleatórias
 
@@ -72,16 +77,7 @@ function getColors() {
         paletteColors.appendChild(palette);
     }
 
-    // if (localStorage.getItem('colorPalette') === null) {
-    //     generateColor();
-    // } 
-    
-    // for (let index = 1; index <= 3; index += 1) {
-    //     let rgbValue = actualColors[index];
-    //     console.log(rgbValue);
-    // }  
 }
-// getColors();
 
 function savePaletteColors() {
     let paletteElements = document.getElementsByClassName('color');
@@ -92,8 +88,6 @@ function savePaletteColors() {
     }
     localStorage.setItem('colorPalette', JSON.stringify(colorsArray));
 }
-
-// console.log(JSON.parse(localStorage.getItem('colorPalette')));
 
 // Adicionando a página um grid de pixels 5x5
 
@@ -114,25 +108,6 @@ function boardCreate(numberOfPixels) {
 
     }
 }
-boardCreate(5);
-
-// Selecionar cores da paleta
-
-// let colors = document.querySelectorAll('.color');
-// console.log(colors);
-// function pickColor() {
-//     for (let colorPosition = 0; colorPosition < colors.length; colorPosition += 1) {
-//         console.log('teste');
-//         // colors[colorPosition].addEventListener('click', function(event) {
-//         //     for (let secondColorPosition = 0; secondColorPosition < colors.length; secondColorPosition += 1) {
-//         //         colors[secondColorPosition].classList.remove('selected');
-//         //     }
-//         //     event.target.className = 'color selected';
-//         // })
-//     }
-// } 
-// pickColor();  
-// classList.remove source: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
 
 // Pintar pixel com a cor escolhida
 
@@ -144,6 +119,12 @@ pixelSelector.addEventListener('click', function(event) {
         let pickedColor = document.querySelector('.selected');
         let color = getComputedStyle(pickedColor).backgroundColor;
         paintedPixel.style.backgroundColor = color;
+        let getPixelElements = document.getElementsByClassName('pixel');
+        let recolorsArray = [];
+        for (let index = 0; index < getPixelElements.length; index += 1) {
+            recolorsArray.push(getPixelElements[index].style.backgroundColor);
+        }
+        localStorage.setItem('pixelBoard', JSON.stringify(recolorsArray));
     }
 })
 // getComputedStyle source: https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
@@ -161,8 +142,8 @@ function resetGrid() {
         }
   })
 }
-resetGrid();
 
+// Função para selecionar a cor da paleta
 
 function pickColor() {
     let colors = document.getElementsByClassName('color');
@@ -177,4 +158,17 @@ function pickColor() {
         })
     }
 } 
-// pickColor();
+
+function recoverPaintedColors() {
+    const getPixelColors = JSON.parse(localStorage.getItem('pixelBoard'));  
+    const getEachPixel = document.getElementsByClassName('pixel');
+
+    for (index = 0; index < getEachPixel.length; index += 1) {
+        getEachPixel[index].style.backgroundColor = getPixelColors[index];
+    }
+}
+
+// Chamada de funções
+
+boardCreate(5);
+resetGrid();
