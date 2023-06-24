@@ -6,6 +6,11 @@
     <br/>
      <br/>
      <br/>
+    
+
+https://github.com/vitoraok1/js-pixels-art-trybe/assets/112435823/33a97ffc-e4dc-41c5-9d3f-bdf259a13578
+
+
   </p>
 </p>
 
